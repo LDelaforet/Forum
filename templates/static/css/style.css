@@ -542,7 +542,16 @@ body {
     margin: 0 0 6px 0;
     position: absolute;
     bottom: -45px;
+    border: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
     left: 0;
+}
+
+.post-bandeau:hover {
+    transform: translateY(-2px);
+    color: var(--text-color-white);
+    transform: scale(1.05);
 }
 
 .post-badge {
@@ -551,8 +560,18 @@ body {
     background: var(--button-color);
     border-radius: 30px;
     position: absolute;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
     right: 12px;
     top: 126px;
+}
+
+.post-badge:hover {
+    transform: translateY(-2px);
+    color: var(--text-color-white);
+    transform: scale(1.05);
 }
 
 .post-stats {
