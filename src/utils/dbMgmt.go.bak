@@ -1,0 +1,173 @@
+package utils
+
+import (
+	"database/sql"
+	"fmt"
+	"log"
+	"time"
+
+	_ "github.com/go-sql-driver/mysql" // Import du driver MySQL (anonyme)
+)
+
+// DbContext est l’instance de connexion partagée à la base MySQL
+var DbContext *sql.DB
+
+//////////////////////////////////////////////////////////////////////////
+
+func CoolDown(length int) {
+	log.Printf("0/%d", length)
+	for i := 0; i < length; i++ {
+		time.Sleep(1 * time.Second)
+		log.Printf("%d/%d", i+1, length)
+	}
+}
+
+func UserBDDTest() {
+	// Initialise la connexion à la base de données
+	InitDB()
+
+	id, err := GetMaxID("user")
+	if err != nil {
+		log.Println("Erreur :", err)
+	}
+
+	log.Printf("MaxID: %d", id)
+
+	id += 1
+
+	idString := fmt.Sprintf("%d", id)
+
+	err = CreateUser(id, "leo"+idString, "leo"+idString+"@example.com", "password123")
+	if err != nil {
+		log.Println("Erreur:", err)
+	}
+
+	CoolDown(10)
+
+	err = DeleteLineById("user", id)
+	if err != nil {
+		log.Println("Erreur:", err)
+	}
+
+	// Ferme la connexion à la base de données à la fin du programme
+	defer DbContext.Close()
+}
+
+func PostBDDTest() {
+	// Initialise la connexion à la base de données
+	InitDB()
+
+	id, err := GetMaxID("post")
+	if err != nil {
+		log.Println("Erreur :", err)
+	}
+
+	log.Printf("MaxID: %d", id)
+
+	id += 1
+
+	err = CreatePost(id, "Lorem ipsum", "Lorem ipsum dolor sit amet", 1)
+	if err != nil {
+		log.Println("Erreur:", err)
+	}
+
+	CoolDown(10)
+
+	err = DeleteLineById("post", id)
+	if err != nil {
+		log.Println("Erreur:", err)
+	}
+
+	// Ferme la connexion à la base de données à la fin du programme
+	defer DbContext.Close()
+}
+
+func CommentBDDTest() {
+	// Initialise la connexion à la base de données
+	InitDB()
+
+	id, err := GetMaxID("comment")
+	if err != nil {
+		log.Println("Erreur :", err)
+	}
+
+	log.Printf("MaxID: %d", id)
+
+	id += 1
+
+	// Commentaire racine (pas de parent)
+	err = CreateComment(id, "Lorem ipsum dolor sit amet", 1, nil, 1)
+	if err != nil {
+		log.Println("Erreur:", err)
+	}
+	id += 1
+	// Réponse à un commentaire (parent id = 1)
+	parentID := 1
+	err = CreateComment(id, "Lorem ipsum dolor sit amet", 1, &parentID, 1)
+	if err != nil {
+		log.Println("Erreur:", err)
+	}
+
+	CoolDown(10)
+
+	err = DeleteLineById("comment", id)
+	if err != nil {
+		log.Println("Erreur:", err)
+	}
+
+	// Ferme la connexion à la base de données à la fin du programme
+	defer DbContext.Close()
+}
+
+func VoteBDDTest() {
+	// Initialise la connexion à la base de données
+	InitDB()
+
+	id, err := GetMaxID("vote")
+	if err != nil {
+		log.Println("Erreur :", err)
+	}
+
+	log.Printf("MaxID: %d", id)
+
+	id += 1
+
+	// Vote sur un post (post_id = 1)
+	postID := 1
+	err = CreateVote(id, 1, &postID, nil, 1)
+	if err != nil {
+		log.Println("Erreur:", err)
+	}
+	id += 1
+
+	// Crée un commentaire pour tester le vote sur commentaire
+	commentID := 0
+	commentID, err = GetMaxID("comment")
+	if err != nil {
+		log.Println("Erreur :", err)
+	}
+	if commentID == 0 {
+		// Aucun commentaire, on en crée un
+		commentID = 1
+		err = CreateComment(commentID, "Test pour vote", 1, nil, 1)
+		if err != nil {
+			log.Println("Erreur création commentaire:", err)
+		}
+	}
+
+	// Vote sur un commentaire existant
+	err = CreateVote(id, 1, nil, &commentID, -1)
+	if err != nil {
+		log.Println("Erreur:", err)
+	}
+
+	CoolDown(10)
+
+	err = DeleteLineById("vote", id)
+	if err != nil {
+		log.Println("Erreur:", err)
+	}
+
+	// Ferme la connexion à la base de données à la fin du programme
+	defer DbContext.Close()
+}
