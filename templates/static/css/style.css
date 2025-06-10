@@ -1,0 +1,850 @@
+@font-face {
+    font-family: 'Konkhmer';
+    src: url(/static/font/KonkhmerSleokchher-Regular.ttf);
+}
+
+:root {
+    /* Couleurs principales */
+    --background-color: #232529;
+    --primary-color: #393B3D;
+    --secondary-color: #232529;
+    --button-color: #FF2222;
+    --text-color: #B0B0B0;
+    --text-color-light: #A0A0A0;
+    --text-color-white: #fff;
+    
+    /* Couleurs de la scrollbar */
+    --scrollbar-track: #1F2327;
+    --scrollbar-thumb-start: #FF0000;
+    --scrollbar-thumb-middle: #CC0000;
+    --scrollbar-thumb-end: #FF0000;
+    --scrollbar-thumb-hover-start: #FF3333;
+    --scrollbar-thumb-hover-end: #FF3333;
+    --scrollbar-thumb-active-start: #CC0000;
+    --scrollbar-thumb-active-middle: #990000;
+    --scrollbar-thumb-active-end: #CC0000;
+    
+    /* Bordures */
+    --border-color: #393B3D;
+    
+    /* Polices */
+    --font-family: 'Konkhmer', sans-serif;
+
+    /* Couleurs des icônes */
+    --icon-color: var(--text-color);
+    --icon-color-hover: var(--button-color);
+    --icon-color-active: var(--button-color);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Konkhmer', sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    overflow: hidden;
+    height: 100%;
+}
+
+/* Navbar */
+.navbar {
+    width: 100vw;
+    height: 64px;
+    background: var(--background-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-logo {
+    color: var(--text-color-light);
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.navbar-search {
+    flex: 1;
+    margin: 0 315px;
+    height: 36px;
+    background: var(--primary-color);
+    border-radius: 18px;
+    border: none;
+    color: var(--text-color-white);
+    padding: 0 24px;
+    font-size: 1rem;
+    min-width: 320px;
+}
+
+.navbar-btns {
+    display: flex;
+    gap: 16px;
+}
+
+.navbar-btn {
+    width: 80px;
+    height: 36px;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 18px;
+}
+
+/* Main Container */
+.main-container {
+    display: flex;
+    height: calc(100vh - 48px);
+}
+
+/* Left Sidebar */
+.left-sidebar {
+    width: 260px;
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 32px 0 32px 32px;
+    border-right: 1px solid var(--border-color);
+}
+
+.sidebar-item {
+    width: 100%;
+    padding: 16px 0 16px 8px;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    border: none;
+    background: none;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.sidebar-item:hover {
+    background: var(--primary-color);
+    color: var(--text-color-white);
+}
+
+.sidebar-button {
+    margin-top: auto;
+    width: 80%;
+    height: 36px;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 18px;
+    color: var(--text-color-white);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    align-self: center;
+}
+
+/* Central Container */
+.central-container {
+    flex: 1;
+    background-color: var(--background-color);
+    padding: 32px 0 32px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.cards-container {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.card {
+    background-color: var(--primary-color);
+    border-radius: 18px;
+    padding: 32px 24px 24px 24px;
+    min-height: 120px;
+    box-shadow: none;
+    position: relative;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.card-title {
+    background: var(--button-color);
+    color: var(--text-color-white);
+    border-radius: 12px;
+    padding: 8px 32px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.card-stats {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.card-stats button {
+    background: var(--button-color);
+    border: none;
+    border-radius: 12px;
+    color: var(--text-color-white);
+    width: 48px;
+    height: 32px;
+    font-size: 1.1rem;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.card-stats button span {
+    font-size: 1.2rem;
+}
+
+/* Right Sidebar */
+.right-sidebar {
+    width: 320px;
+    background-color: var(--background-color);
+    padding: 32px 0 32px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-left: 1px solid var(--border-color);
+}
+
+.right-card {
+    width: 90%;
+    height: 220px;
+    background: var(--primary-color);
+    border-radius: 18px;
+    margin-bottom: 32px;
+}
+
+.right-card-small {
+    width: 90%;
+    height: 80px;
+    background: var(--primary-color);
+    border-radius: 18px;
+    margin-bottom: 16px;
+}
+
+/* Custom Scrollbar Styling */
+.central-container::-webkit-scrollbar {
+    width: 12px;
+}
+
+.central-container::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: 10px;
+    margin: 5px 0;
+}
+
+.central-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--scrollbar-thumb-start) 0%, var(--scrollbar-thumb-middle) 50%, var(--scrollbar-thumb-end) 100%);
+    border-radius: 10px;
+    border: 2px solid var(--scrollbar-track);
+    box-shadow: inset 0 0 3px rgba(255, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.central-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--scrollbar-thumb-hover-start) 0%, var(--scrollbar-thumb-start) 50%, var(--scrollbar-thumb-hover-end) 100%);
+    box-shadow: inset 0 0 5px rgba(255, 0, 0, 0.5);
+    transform: scale(1.1);
+}
+
+.central-container::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(180deg, var(--scrollbar-thumb-active-start) 0%, var(--scrollbar-thumb-active-middle) 50%, var(--scrollbar-thumb-active-end) 100%);
+}
+
+.central-container::-webkit-scrollbar-corner {
+    background: #1F2327;
+}
+
+/* Firefox scrollbar */
+.central-container {
+    scrollbar-width: thin;
+    scrollbar-color: #FF0000 #1F2327;
+}
+
+/* Custom scrollbar animation */
+@keyframes scrollbarGlow {
+    0% {
+        box-shadow: inset 0 0 3px rgba(255, 0, 0, 0.3);
+    }
+
+    50% {
+        box-shadow: inset 0 0 8px rgba(255, 0, 0, 0.6);
+    }
+
+    100% {
+        box-shadow: inset 0 0 3px rgba(255, 0, 0, 0.3);
+    }
+}
+
+.central-container::-webkit-scrollbar-thumb:hover {
+    animation: scrollbarGlow 2s infinite;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .left-sidebar {
+        width: 200px;
+    }
+
+    .right-sidebar {
+        width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .left-sidebar,
+    .right-sidebar {
+        display: none;
+    }
+
+    .main-container {
+        flex-direction: column;
+    }
+}
+
+/* === MAQUETTE STYLES === */
+.layout {
+    margin-top: 64px;
+    display: flex;
+    height: calc(100vh - 64px);
+    background: var(--background-color);
+}
+
+.sidebar {
+    width: 355px;
+    background: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0 32px 0;
+    position: relative;
+}
+
+.sidebar-logo {
+    color: var(--text-color-light);
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 16px 0 0 16px;
+    letter-spacing: 2px;
+}
+
+.sidebar-separator {
+    width: 80%;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 2px;
+    margin: 32px 0 0 0;
+}
+
+.sidebar-bottom-btn {
+    position: absolute;
+    left: 35px;
+    bottom: 24px;
+    width: 175px;
+    height: 36px;
+    font-size: 1rem;
+    font-weight: 500;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 16px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    /* Couleur du texte par défaut */
+    color: var(--text-color-light);
+}
+
+.sidebar-bottom-btn:hover {
+    background: var(--button-color);
+    transform: translateY(-2px);
+    /* Couleur du texte au survol */
+    color: var(--text-color-white);
+}
+
+.sidebar-bottom-btn:active {
+    transform: translateY(0);
+}
+
+/* Couleur de l'icône par défaut */
+.sidebar-bottom-btn i.fa-regular,
+.sidebar-bottom-btn i.fa-solid {
+     font-size: 1.2rem;
+     margin-right: 0;
+     color: var(--text-color-light);
+     transition: all 0.2s ease;
+}
+
+/* Couleur de l'icône au survol */
+.sidebar-bottom-btn:hover i.fa-regular,
+.sidebar-bottom-btn:hover i.fa-solid {
+     color: var(--text-color-white);
+     transform: scale(1.1);
+}
+
+.main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--background-color);
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    background: var(--background-color);
+    padding: 0 32px;
+    border-bottom: none;
+}
+
+.topbar-logo {
+    width: 120px;
+    height: 32px;
+}
+
+.topbar-search {
+    flex: 1;
+    margin: 0 32px;
+    height: 32px;
+    background: var(--primary-color);
+    border-radius: 16px;
+    border: none;
+    color: var(--text-color-white);
+    padding: 0 24px;
+    font-size: 1rem;
+}
+
+.topbar-btns {
+    display: flex;
+    gap: 16px;
+}
+
+.topbar-btn {
+    width: 80px;
+    height: 32px;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 16px;
+}
+
+.content-area {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 48px;
+}
+
+.center-area {
+    flex: 2;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 0;
+}
+
+/* Scrollbar custom pour la colonne centrale */
+.center-area::-webkit-scrollbar {
+    width: 6px;
+    background: var(--background-color);
+}
+
+.center-area::-webkit-scrollbar-track {
+    background: var(--background-color);
+    border-radius: 8px;
+}
+
+.center-area::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 8px;
+    min-height: 40px;
+    border: 2px solid var(--background-color);
+}
+
+.center-area::-webkit-scrollbar-thumb:hover {
+    background: var(--text-color-light);
+}
+
+.center-area {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--background-color);
+}
+
+.right-area {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100%;
+}
+
+.posts {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    padding: 48px 0 0 0;
+    align-items: center;
+    padding-bottom: 0;
+    position: relative;
+}
+
+.post-card {
+    width: 600px;
+    min-height: 180px;
+    background: var(--primary-color);
+    border-radius: 24px;
+    margin-bottom: 48px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+}
+
+.post-card:last-child {
+    margin-bottom: 0;
+}
+
+.post-bandeau {
+    width: 180px;
+    height: 25px;
+    background: var(--button-color);
+    border-radius: 30px;
+    margin: 0 0 6px 0;
+    position: absolute;
+    bottom: -45px;
+    left: 0;
+}
+
+.post-badge {
+    width: 149px;
+    height: 40px;
+    background: var(--button-color);
+    border-radius: 30px;
+    position: absolute;
+    right: 12px;
+    top: 126px;
+}
+
+.post-stats {
+    width: 120px;
+    height: 16px;
+    background: none;
+    color: var(--text-color);
+    position: absolute;
+    bottom: -32px;
+    right: 0;
+    text-align: right;
+    font-size: 0.9rem;
+}
+
+.post-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: absolute;
+    bottom: -45px;
+    right: 0;
+}
+
+.rightbar {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 48px 0 0 0;
+    right: 30px;
+    position: relative;
+}
+
+.rightbar-card {
+    width: 340px;
+    height: 220px;
+    background: var(--primary-color);
+    border-radius: 24px;
+}
+
+/* Actions sous les posts */
+.post-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 16px 0 0 0;
+    align-self: flex-end;
+}
+
+.post-action-btn {
+    background: none;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.post-action-btn:hover {
+    background: var(--background-color);
+    transform: scale(1.1);
+}
+
+.post-action-btn:active {
+    transform: scale(0.95);
+}
+
+.post-votes {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    min-width: 48px;
+    text-align: center;
+}
+
+/* Styles pour les icônes */
+.fa-regular, .fa-solid {
+    color: var(--icon-color);
+    transition: all 0.2s ease;
+    font-size: 1.4rem;
+}
+
+.fa-regular:hover, .fa-solid:hover {
+    color: var(--icon-color-hover);
+}
+
+.fa-regular.active, .fa-solid.active {
+    color: var(--icon-color-active);
+}
+
+/* Styles spécifiques pour les icônes de la navbar */
+.navbar-btn .fa-regular, .navbar-btn .fa-solid {
+    color: var(--text-color-light);
+    transition: all 0.2s ease;
+}
+
+.navbar-btn:hover .fa-regular, .navbar-btn:hover .fa-solid {
+    color: var(--text-color-white);
+}
+
+/* Styles pour les icônes de la sidebar */
+.sidebar-bottom-btn {
+    width: 175px;
+    height: 36px;
+    font-size: 1rem;
+    font-weight: 500;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 16px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    /* Couleur du texte par défaut */
+    color: var(--text-color-light);
+}
+
+.sidebar-bottom-btn:hover {
+    background: var(--button-color);
+    transform: translateY(-2px);
+    /* Couleur du texte au survol */
+    color: var(--text-color-white);
+}
+
+.sidebar-bottom-btn:active {
+    transform: translateY(0);
+}
+
+/* Couleur de l'icône par défaut */
+.sidebar-bottom-btn i.fa-regular,
+.sidebar-bottom-btn i.fa-solid {
+     font-size: 1.2rem;
+     margin-right: 0;
+     color: var(--text-color-light);
+     transition: all 0.2s ease;
+}
+
+/* Couleur de l'icône au survol */
+.sidebar-bottom-btn:hover i.fa-regular,
+.sidebar-bottom-btn:hover i.fa-solid {
+     color: var(--text-color-white);
+     transform: scale(1.1);
+}
+
+/* Styles pour les icônes des posts */
+.post-actions .fa-regular, .post-actions .fa-solid {
+    font-size: 1.8rem;
+}
+
+.post-action-btn:hover .fa-regular, .post-action-btn:hover .fa-solid {
+    color: var(--button-color);
+    transform: scale(1.1);
+}
+
+.post-action-btn.active .fa-regular, .post-action-btn.active .fa-solid {
+    color: var(--button-color);
+}
+
+/* Mise à jour des styles existants pour utiliser les variables */
+.layout {
+    background: var(--background-color);
+}
+
+.sidebar {
+    background: var(--background-color);
+}
+
+.sidebar-logo {
+    color: var(--text-color-light);
+}
+
+.sidebar-separator {
+    background: var(--primary-color);
+}
+
+.sidebar-bottom-btn {
+    background: var(--primary-color);
+}
+
+.main-area {
+    background: var(--background-color);
+}
+
+.topbar {
+    background: var(--background-color);
+}
+
+.topbar-search {
+    background: var(--primary-color);
+    color: var(--text-color-white);
+}
+
+.topbar-btn {
+    background: var(--primary-color);
+}
+
+.center-area::-webkit-scrollbar {
+    background: var(--background-color);
+}
+
+.center-area::-webkit-scrollbar-track {
+    background: var(--background-color);
+}
+
+.center-area::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border: 2px solid var(--background-color);
+}
+
+.center-area::-webkit-scrollbar-thumb:hover {
+    background: var(--text-color-light);
+}
+
+.center-area {
+    scrollbar-color: var(--primary-color) var(--background-color);
+}
+
+.post-card {
+    background: var(--primary-color);
+}
+
+.post-bandeau, .post-badge {
+    background: var(--button-color);
+}
+
+.post-stats {
+    color: var(--text-color);
+}
+
+.rightbar-card {
+    background: var(--primary-color);
+}
+
+.post-action-btn:hover {
+    background: var(--background-color);
+}
+
+.post-votes {
+    color: var(--text-color);
+}
+
+/* Mise à jour des styles des boutons pour inclure les icônes */
+.navbar-btn, .sidebar-button, .topbar-btn, .sidebar-bottom-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--text-color-light);
+    background: var(--primary-color);
+    border: none;
+    border-radius: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 8px 16px;
+}
+
+.navbar-btn:hover, .sidebar-button:hover, .topbar-btn:hover, .sidebar-bottom-btn:hover {
+    background: var(--button-color);
+    transform: translateY(-2px);
+}
+
+.navbar-btn:active, .sidebar-button:active, .topbar-btn:active, .sidebar-bottom-btn:active {
+    transform: translateY(0);
+}
+
+/* Style pour les boutons de vote */
+.card-stats button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.card-stats button .fa-regular, .card-stats button .fa-solid {
+    font-size: 1.2rem;
+}
+
+/* Style pour les actions des posts */
+.post-actions .fa-regular, .post-actions .fa-solid {
+    font-size: 1.2rem;
+}
+
+.post-action-btn:hover .fa-regular, .post-action-btn:hover .fa-solid {
+    color: var(--icon-color-hover);
+}
+
+.post-action-btn.active .fa-regular, .post-action-btn.active .fa-solid {
+    color: var(--icon-color-active);
+}
