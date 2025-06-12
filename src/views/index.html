@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -8,23 +8,21 @@
     <script src="https://kit.fontawesome.com/e29182f907.js" crossorigin="anonymous"></script>
     <title>Forum Maquette</title>
 </head>
-<!-- index.html -->
-
 <body>
     <!-- NAVBAR EN HAUT -->
     <nav class="navbar">
         <div class="navbar-logo">LOGO</div>
         <input type="text" class="navbar-search" placeholder="Rechercher ..." />
         <div class="navbar-btns">
-            <button class="navbar-btn"><i class="fa-regular fa-user"></i></button>
-            <button class="navbar-btn"><i class="fa-regular fa-bell"></i></button>
+            <button class="navbar-btn" onclick="window.location.href='./log-in.html'"><i class="fa-regular fa-user"></i></button>
+            <button class="navbar-btn" onclick="window.location.href='/notifications'"><i class="fa-regular fa-bell"></i></button>
         </div>
     </nav>
     <div class="layout">
         <!-- Sidebar Left -->
         <aside class="sidebar">
             <div class="sidebar-separator"></div>
-            <button class="sidebar-bottom-btn"><i class="fa-solid fa-plus"></i> Créer</button>
+            <button class="sidebar-bottom-btn" onclick="window.location.href='./create-post.html'"><i class="fa-solid fa-plus"></i> Créer</button>
         </aside>
         <div class="main-area">
             <div class="content-area">
@@ -32,8 +30,8 @@
                     <!-- Posts -->
                     <section class="posts">
                         <div class="post-card">
-                            <button class="post-bandeau" onclick="window.location.href='https://www.google.com'">Google</button>
-                            <button class="post-badge" onclick="window.location.href='https://github.com/LDelaforet/Forum'">Forum</button>
+                            <button class="post-bandeau" onclick="window.location.href='/comment-card'"></button>
+                            <button class="post-badge" onclick="window.location.href='/join-card'"></button>
                             <div class="post-actions">
                                 <button class="post-action-btn">
                                     <i class="fa-solid fa-minus"></i>

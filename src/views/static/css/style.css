@@ -47,7 +47,7 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     font-family: var(--font-family);
-    overflow: hidden;
+    overflow-y: auto;
     height: 100%;
 }
 

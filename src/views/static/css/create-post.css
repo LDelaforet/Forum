@@ -1,0 +1,299 @@
+@font-face {
+    font-family: 'Konkhmer';
+    src: url(/static/font/KonkhmerSleokchher-Regular.ttf);
+}
+
+:root {
+    /* Couleurs principales */
+    --background-color: #232529;
+    --primary-color: #393B3D;
+    --secondary-color: #232529;
+    --button-color: #FF2222;
+    --text-color: #B0B0B0;
+    --text-color-light: #A0A0A0;
+    --text-color-white: #fff;
+    
+    /* Couleurs de la scrollbar */
+    --scrollbar-track: #1F2327;
+    --scrollbar-thumb-start: #FF0000;
+    --scrollbar-thumb-middle: #CC0000;
+    --scrollbar-thumb-end: #FF0000;
+    --scrollbar-thumb-hover-start: #FF3333;
+    --scrollbar-thumb-hover-end: #FF3333;
+    --scrollbar-thumb-active-start: #CC0000;
+    --scrollbar-thumb-active-middle: #990000;
+    --scrollbar-thumb-active-end: #CC0000;
+    
+    /* Bordures */
+    --border-color: #393B3D;
+    
+    /* Polices */
+    --font-family: 'Konkhmer', sans-serif;
+
+    /* Couleurs des icônes */
+    --icon-color: var(--text-color);
+    --icon-color-hover: var(--button-color);
+    --icon-color-active: var(--button-color);
+}
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.layout {
+    display: flex;
+    flex-grow: 1;
+    margin-top: 64px; /* Space for the fixed navbar (assuming navbar height is 64px from style.css) */
+}
+
+.main-area {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 20px;
+    gap: 20px;
+}
+
+.content-area {
+    display: flex;
+    flex-grow: 1;
+    gap: 20px;
+    flex-direction: row; /* Ensure columns are in a row */
+}
+
+.center-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center the create-topic section */
+    align-items: center; /* Horizontally center the create-topic section */
+    padding: 0 10px; /* Slight horizontal padding to prevent content touching edges */
+}
+
+/* Create Topic Section */
+.create-topic {
+    padding: 3rem; /* Generous internal padding */
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px; /* Max width for the entire card */
+    margin: auto; /* Auto margins for horizontal centering if max-width is not reached */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center h1 and form within this section */
+}
+
+.create-topic h1 {
+    color: var(--text-color-white);
+    margin-bottom: 2.5rem; /* Space after the main title */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the icon and text of h1 */
+    gap: 0.5rem;
+    font-size: 1.8rem;
+}
+
+.create-topic h1 i {
+    color: #3498db;
+}
+
+/* Topic Form */
+.topic-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Space between each form group */
+    width: 100%; /* Form takes full width of its parent (.create-topic) */
+    max-width: 600px; /* Max width for the form elements for better readability */
+    align-items: flex-start; /* Align form groups (labels, inputs) to the left */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* Space between label and input/textarea */
+    width: 100%; /* Form-group takes full width of the form */
+    align-items: flex-start; /* Align label and input to the left */
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text-color-light);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-group label i {
+    color: var(--text-color-light);
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%; /* Input/textarea takes full width of its wrapper */
+    padding: 0.8rem 1rem; 
+    border: 2px solid #444;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #333; /* Dark background for inputs */
+    color: #f8f9fa; /* Light text for inputs */
+    box-sizing: border-box;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+    border-color: #3498db;
+    background-color: #2c2c2c;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.form-group input[type="text"]::placeholder,
+.form-group textarea::placeholder {
+    color: #bbb; /* Placeholder color */
+}
+
+.form-group small {
+    color: #666;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.5rem; /* Space above helper text */
+}
+
+/* Form Actions - Buttons */
+.form-actions {
+    display: flex;
+    gap: 1rem; /* Space between buttons */
+    margin-top: 2rem; /* Space above action buttons */
+    justify-content: center; /* Center action buttons */
+    width: 100%;
+    max-width: 600px; /* Align with form max-width */
+}
+
+.btn-submit,
+.btn-cancel {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.btn-submit {
+    background-color: var(--button-color);
+    color: white;
+}
+
+.btn-submit:hover {
+    background-color: var(--button-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-cancel {
+    background-color: #e0e0e0;
+    color: #2c3e50;
+}
+
+.btn-cancel:hover {
+    background-color: #d0d0d0;
+    transform: translateY(-1px);
+}
+
+/* Right sidebar */
+.right-area {
+    width: 280px; /* Fixed width for the right sidebar */
+    flex-shrink: 0; /* Prevent sidebar from shrinking */
+    padding-left: 20px; /* Space between central content and sidebar */
+}
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .create-topic {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn-submit,
+    .btn-cancel {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .right-area {
+        width: 100%;
+        padding-left: 0;
+        padding-top: 20px;
+    }
+
+    .content-area {
+        flex-direction: column;
+    }
+}
+
+.image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.image-preview img {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Tags display */
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    background-color: rgba(52, 152, 219, 0.1);
+    border: 1px solid #3498db;
+    border-radius: 16px;
+    color: #3498db;
+    font-size: 0.875rem;
+}
+
+.tag i {
+    font-size: 0.75rem;
+    color: #3498db;
+} 
