@@ -639,6 +639,11 @@ body {
     transform: scale(1.1);
 }
 
+.post-action-btn.active {
+    background: var(--background-color);
+    transform: scale(1.1);
+}
+
 .post-action-btn:active {
     transform: scale(0.95);
 }
@@ -814,9 +819,11 @@ body {
     background: var(--background-color);
 }
 
+
 .post-votes {
     color: var(--text-color);
 }
+
 
 /* Mise à jour des styles des boutons pour inclure les icônes */
 .navbar-btn, .sidebar-button, .topbar-btn, .sidebar-bottom-btn {

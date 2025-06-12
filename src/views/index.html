@@ -120,5 +120,27 @@
         </div>
     </div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const voteButtons = document.querySelectorAll('.post-action-btn');
 
+        voteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all other buttons in the same post-actions group
+                const parentActions = this.closest('.post-actions');
+                if (parentActions) {
+                    const siblingButtons = parentActions.querySelectorAll('.post-action-btn');
+                    siblingButtons.forEach(sibling => {
+                        if (sibling !== this) {
+                            sibling.classList.remove('active');
+                        }
+                    });
+                }
+                
+                // Toggle active class on the clicked button
+                this.classList.toggle('active');
+            });
+        });
+    });
+</script>
 </html>
