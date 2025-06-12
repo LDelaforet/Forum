@@ -72,6 +72,7 @@ body {
     font-size: 2rem;
     font-weight: bold;
     letter-spacing: 2px;
+    cursor: pointer;
 }
 
 .navbar-search {
@@ -358,30 +359,28 @@ body {
 }
 
 .sidebar-bottom-btn {
-    position: absolute;
-    left: 35px;
-    bottom: 24px;
-    width: 175px;
-    height: 36px;
-    font-size: 1rem;
-    font-weight: 500;
-    background: var(--primary-color);
+    margin-top: auto;
+    width: 100%;
+    max-width: 200px;
+    padding: 1rem 1.5rem;
+    background-color: var(--button-color);
+    color: white;
     border: none;
-    border-radius: 16px;
-    transition: all 0.2s ease;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    cursor: pointer;
-    /* Couleur du texte par défaut */
-    color: var(--text-color-light);
+    gap: 0.75rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .sidebar-bottom-btn:hover {
     background: var(--button-color);
     transform: translateY(-2px);
-    /* Couleur du texte au survol */
     color: var(--text-color-white);
 }
 
