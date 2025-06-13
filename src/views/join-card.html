@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./static/css/style.css">
+    <link rel="stylesheet" href="./static/css/discussion.css">
+    <script src="https://kit.fontawesome.com/e29182f907.js" crossorigin="anonymous"></script>
+    <title>Forum Maquette</title>
+
+</head>
+<body>
+    <!-- NAVBAR EN HAUT -->
+    <nav class="navbar">
+        <div class="navbar-logo" onclick="window.location.href='./index.html'">LOGO</div>
+        <input type="text" class="navbar-search" placeholder="Rechercher ..." />
+        <div class="navbar-btns">
+            <button class="navbar-btn" onclick="window.location.href='./log-in.html'"><i class="fa-regular fa-user"></i></button>
+            <button class="navbar-btn" onclick="window.location.href='/notifications'"><i class="fa-regular fa-bell"></i></button>
+        </div>
+    </nav>
+    <div class="layout">
+        <!-- Sidebar Left -->
+        <aside class="sidebar">
+            <div class="sidebar-separator"></div>
+            <button class="sidebar-bottom-btn" onclick="window.location.href='./create-post.html'"><i class="fa-solid fa-plus"></i> Créer</button>
+        </aside>
+        <div class="main-area">
+            <div class="content-area">
+                <div class="center-area">
+                    <div class="discussion-container">
+                        <!-- Post principal -->
+                        <div class="main-post">
+                            <h1 class="main-post-title">Titre du Post Principal</h1>
+                            <div class="main-post-author">
+                                <div class="author-avatar">JD</div>
+                                <div class="author-info">
+                                    <span class="author-name">John Doe</span>
+                                    <span class="post-date">Publié le 15 Mars 2024</span>
+                                </div>
+                            </div>
+                            <div class="main-post-content">
+                                Voici le message principal de la discussion. Les utilisateurs peuvent répondre à ce message et créer des sous-discussions.
+                            </div>
+                            <div class="reactions">
+                                <div class="reaction">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    <span>15</span>
+                                </div>
+                                <div class="reaction">
+                                    <i class="fas fa-heart"></i>
+                                    <span>8</span>
+                                </div>
+                            </div>
+                            <div class="message-actions">
+                                <button class="action-btn" onclick="showReplyForm(this)">
+                                    <i class="fas fa-reply"></i> Répondre
+                                </button>
+                                <button class="action-btn" onclick="toggleReactions(this)">
+                                    <i class="fas fa-smile"></i> Réagir
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Réponses -->
+                        <div class="replies">
+                            <div class="message">
+                                <div class="message-header">
+                                    <span class="message-author">Jane Smith</span>
+                                    <span class="message-date">Il y a 1 heure</span>
+                                </div>
+                                <div class="message-content">
+                                    Voici une réponse au message principal.
+                                </div>
+                                <div class="reactions">
+                                    <div class="reaction">
+                                        <i class="fas fa-thumbs-up"></i>
+                                        <span>5</span>
+                                    </div>
+                                </div>
+                                <div class="message-actions">
+                                    <button class="action-btn" onclick="showReplyForm(this)">
+                                        <i class="fas fa-reply"></i> Répondre
+                                    </button>
+                                    <button class="action-btn" onclick="toggleReactions(this)">
+                                        <i class="fas fa-smile"></i> Réagir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Formulaire de nouveau message -->
+                        <div class="new-message-form">
+                            <textarea class="message-input" placeholder="Écrivez votre message ici..."></textarea>
+                            <button class="submit-btn">Envoyer</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-area">
+                    <aside class="rightbar">
+                        <div class="rightbar-card"></div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showReplyForm(button) {
+            const messageDiv = button.closest('.message, .main-post');
+            const existingForm = messageDiv.querySelector('.reply-form');
+            
+            if (existingForm) {
+                existingForm.remove();
+                return;
+            }
+
+            const form = document.createElement('div');
+            form.className = 'reply-form';
+            form.innerHTML = `
+                <textarea class="message-input" placeholder="Écrivez votre réponse ici..."></textarea>
+                <button class="submit-btn" onclick="submitReply(this)">Répondre</button>
+            `;
+            
+            messageDiv.appendChild(form);
+        }
+
+        function submitReply(button) {
+            const form = button.closest('.reply-form');
+            const textarea = form.querySelector('textarea');
+            const content = textarea.value.trim();
+            
+            if (content) {
+                const messageDiv = form.closest('.message, .main-post');
+                const replies = messageDiv.querySelector('.replies') || createRepliesContainer(messageDiv);
+                
+                const newReply = document.createElement('div');
+                newReply.className = 'message';
+                newReply.innerHTML = `
+                    <div class="message-header">
+                        <span class="message-author">Utilisateur</span>
+                        <span class="message-date">À l'instant</span>
+                    </div>
+                    <div class="message-content">${content}</div>
+                    <div class="reactions">
+                        <div class="reaction">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span>0</span>
+                        </div>
+                    </div>
+                    <div class="message-actions">
+                        <button class="action-btn" onclick="showReplyForm(this)">
+                            <i class="fas fa-reply"></i> Répondre
+                        </button>
+                        <button class="action-btn" onclick="toggleReactions(this)">
+                            <i class="fas fa-smile"></i> Réagir
+                        </button>
+                    </div>
+                `;
+                
+                replies.appendChild(newReply);
+                form.remove();
+            }
+        }
+
+        function createRepliesContainer(messageDiv) {
+            const replies = document.createElement('div');
+            replies.className = 'replies';
+            messageDiv.appendChild(replies);
+            return replies;
+        }
+
+        function toggleReactions(button) {
+            const messageDiv = button.closest('.message, .main-post');
+            const reactions = messageDiv.querySelector('.reactions');
+            
+            // Ici, vous pouvez ajouter une logique pour afficher un menu de réactions
+            // et gérer l'ajout de réactions
+            alert('Fonctionnalité de réactions à implémenter');
+        }
+    </script>
+</body>
+</html>
