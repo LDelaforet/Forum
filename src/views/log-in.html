@@ -1,0 +1,66 @@
+{{define "login"}}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/log-in.css">
+    <script src="https://kit.fontawesome.com/e29182f907.js" crossorigin="anonymous"></script>
+    <title>Forum - Connexion</title>
+</head>
+<body>
+    <!-- NAVBAR EN HAUT -->
+    <nav class="navbar">
+        <div class="navbar-logo" onclick="window.location.href='/'">LOGO</div>
+    </nav>
+    <div class="layout">
+        <div class="main-area">
+            <div class="content-area">
+                <div class="center-area">
+                    <section class="login-section">
+                        <h1><i class="fas fa-sign-in-alt"></i> Connexion</h1>
+                        {{if .Error}}
+                        <div class="error-message">
+                            {{.Error}}
+                        </div>
+                        {{end}}
+                        <form action="/login" method="POST" class="login-form">
+                            <div class="form-group">
+                                <label for="email">
+                                    <i class="fas fa-envelope"></i> Email
+                                </label>
+                                <div class="input-wrapper">
+                                    <input type="email" id="email" name="email" placeholder="Votre adresse email" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">
+                                    <i class="fas fa-lock"></i> Mot de passe
+                                </label>
+                                <div class="input-wrapper">
+                                    <input type="password" id="password" name="password" placeholder="Votre mot de passe" required>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn-submit">
+                                    <i class="fas fa-sign-in-alt"></i> Se connecter
+                                </button>
+                            </div>
+
+                            <div class="form-footer">
+                                <p>Pas encore de compte ? <a href="/register">S'inscrire</a></p>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+{{end}}

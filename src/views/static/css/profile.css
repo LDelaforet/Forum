@@ -1,0 +1,90 @@
+.profile-container {
+    max-width: 800px;
+    margin: 84px auto 20px auto;
+    background-color: var(--primary-color);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    color: var(--text-color-white);
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: var(--button-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4em;
+    font-weight: bold;
+    color: var(--text-color-white);
+    margin: 0 auto 15px auto;
+    border: 3px solid var(--border-color);
+}
+
+.profile-username {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--text-color-white);
+}
+
+.profile-status {
+    color: var(--text-color);
+    font-size: 1.1em;
+}
+
+.profile-details {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.detail-value {
+    color: var(--text-color-white);
+}
+
+.profile-actions {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.edit-button {
+    background-color: var(--button-color);
+    color: var(--text-color-white);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.edit-button:hover {
+    background-color: var(--scrollbar-thumb-hover-start);
+} 

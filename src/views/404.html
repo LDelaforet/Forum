@@ -1,0 +1,97 @@
+{{define "404"}}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/discussion.css">
+    <script src="https://kit.fontawesome.com/e29182f907.js" crossorigin="anonymous"></script>
+    <title>Erreur {{.ErrorCode}} - {{.ErrorMessage}}</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--background-color);
+            color: var(--text-color-white);
+            text-align: center;
+            font-family: var(--font-family);
+        }
+        .error-container {
+            background-color: var(--primary-color);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            max-width: 800px;
+            width: 90%;
+        }
+        .error-code {
+            font-size: 8em;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        .error-message {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .error-description {
+            font-size: 1.1em;
+            color: var(--text-color);
+            margin-bottom: 30px;
+        }
+        .home-button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-weight: bold;
+            text-decoration: none;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+        .home-button:hover {
+            background-color: var(--hover-color);
+        }
+        .logs-container {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 0.9em;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .logs-container pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-code">{{.ErrorCode}}</div>
+        <div class="error-message">{{.ErrorMessage}}</div>
+        <div class="error-description">
+            Désolé, une erreur est survenue lors du traitement de votre requête.
+        </div>
+        <a href="/" class="home-button">Retour à l'accueil</a>
+        
+        <div class="logs-container">
+            <pre>{{range .Logs}}{{.}}
+{{end}}</pre>
+        </div>
+    </div>
+</body>
+</html>
+{{end}} 

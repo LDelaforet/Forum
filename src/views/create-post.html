@@ -1,0 +1,101 @@
+{{define "CreatePost"}}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/create-post.css">
+    <script src="https://kit.fontawesome.com/e29182f907.js" crossorigin="anonymous"></script>
+    <title>Forum Maquette</title>
+</head>
+<body>
+    <!-- NAVBAR EN HAUT -->
+    <nav class="navbar">
+        <div class="navbar-logo" onclick="window.location.href='./index.html'">LOGO</div>
+        <input type="text" class="navbar-search" placeholder="Rechercher ..." />
+        <div class="navbar-btns">
+            <button class="navbar-btn" onclick="window.location.href='./log-in.html'"><i class="fa-regular fa-user"></i></button>
+            <button class="navbar-btn" onclick="window.location.href='/notifications'"><i class="fa-regular fa-bell"></i></button>
+        </div>
+    </nav>
+    <div class="layout">
+        <!-- Sidebar Left -->
+        <aside class="sidebar">
+            <div class="sidebar-separator"></div>
+            <button class="sidebar-bottom-btn" onclick="window.location.href='#'"><i class="fa-solid fa-plus"></i> Créer</button>
+        </aside>
+        <div class="main-area">
+            <div class="content-area">
+                <div class="center-area">
+                    <!-- Creation de Topic -->
+                    <section class="create-topic">
+                        <h1><i class="fas fa-pen-fancy"></i> Créer un topic</h1>
+                        <form action="/create-post" method="POST" class="topic-form">
+                            <div class="form-group">
+                                <label for="title">
+                                    <i class="fas fa-heading"></i> Titre du topic
+                                </label>
+                                <div class="input-wrapper">
+                                    <input type="text" id="title" name="title" placeholder="Donnez un titre à votre topic" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="content">
+                                    <i class="fas fa-align-left"></i> Contenu
+                                </label>
+                                <textarea id="content" name="content" rows="15" placeholder="Décrivez votre topic en détail..."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tags">
+                                    <i class="fas fa-tags"></i> Tags
+                                </label>
+                                <div class="input-wrapper">
+                                    <input type="text" id="tags" name="tags" placeholder="Ajoutez des tags séparés par des virgules">
+                                    <small><i class="fas fa-info-circle"></i> Exemple: technologie, programmation, web</small>
+                                    <div class="tags-container" id="tagsContainer"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn-submit">
+                                    <i class="fas fa-paper-plane"></i> Publier le topic
+                                </button>
+                                <button type="button" class="btn-cancel" onclick="window.history.back()">
+                                    <i class="fas fa-times"></i> Annuler
+                                </button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+                <div class="right-area">
+                    <aside class="rightbar">
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const tagsInput = document.getElementById('tags');
+    const tagsContainer = document.getElementById('tagsContainer');
+
+    tagsInput.addEventListener('input', function(e) {
+        const tags = e.target.value.split(',').map(tag => tag.trim()).filter(tag => tag);
+        tagsContainer.innerHTML = '';
+        
+        tags.forEach(tag => {
+            if (tag) {
+                const tagElement = document.createElement('div');
+                tagElement.className = 'tag';
+                tagElement.innerHTML = `<i class="fas fa-tag"></i>${tag}`;
+                tagsContainer.appendChild(tagElement);
+            }
+        });
+    });
+</script>
+</html>
+{{end}}

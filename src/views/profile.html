@@ -1,0 +1,54 @@
+{{define "profile"}}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/profile.css">
+    <script src="https://kit.fontawesome.com/e29182f907.js" crossorigin="anonymous"></script>
+    <title>Profil - {{.User.Username}}</title>
+</head>
+
+<body>
+    <!-- NAVBAR EN HAUT -->
+    <nav class="navbar">
+        <a class="navbar-logo" href="/">LOGO</a>
+        <input type="text" class="navbar-search" placeholder="Rechercher ..." />
+        <div class="navbar-btns">
+            {{if .User}}
+            <p class="username">{{.User.Username}}</p>
+            {{end}}
+            <a class="navbar-btn" href="/login"><i id="login-icon" class="fa-regular fa-user"></i></a>
+        </div>
+    </nav>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-avatar">{{.User.GetInitials}}</div>
+            <div class="profile-username">{{.User.Username}}</div>
+            <div class="profile-status">{{.User.Status}}</div>
+        </div>
+
+        <div class="profile-details">
+            <div class="detail-item">
+                <span class="detail-label">Email:</span>
+                <span class="detail-value">{{.User.Email}}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Total Publications:</span>
+                <span class="detail-value">{{.User.TotalPosts}}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Total Réponses:</span>
+                <span class="detail-value">{{.User.TotalReplies}}</span>
+            </div>
+            <div class="detail-item">
+                <a href="/logout" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Se déconnecter</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{{end}} 

@@ -1,0 +1,100 @@
+{{define "register"}}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/log-in.css">
+    <script src="https://kit.fontawesome.com/e29182f907.js" crossorigin="anonymous"></script>
+    <title>Forum Maquette - Inscription</title>
+</head>
+<body>
+    <!-- NAVBAR EN HAUT -->
+    <nav class="navbar">
+        <div class="navbar-logo" onclick="window.location.href='./index.html'">LOGO</div>
+    </nav>
+    <div class="layout">
+        <div class="main-area">
+            <div class="content-area">
+                <div class="center-area">
+                    <section class="login-section">
+                        <h1><i class="fas fa-user-plus"></i> Inscription</h1>
+                        {{if .Errors.General}}
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> {{.Errors.General}}
+                        </div>
+                        {{end}}
+                        <form action="/register" method="POST" class="login-form">
+                            <div class="form-group">
+                                <label for="username">
+                                    <i class="fas fa-user"></i> Nom d'utilisateur
+                                </label>
+                                <div class="input-wrapper">
+                                    <input type="text" id="username" name="username" placeholder="Choisissez un nom d'utilisateur" value="{{.Username}}" required>
+                                    {{if .Errors.Username}}
+                                    <div class="field-error">
+                                        <i class="fas fa-exclamation-circle"></i> {{.Errors.Username}}
+                                    </div>
+                                    {{end}}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">
+                                    <i class="fas fa-envelope"></i> Email
+                                </label>
+                                <div class="input-wrapper">
+                                    <input type="email" id="email" name="email" placeholder="Votre adresse email" value="{{.Email}}" required>
+                                    {{if .Errors.Email}}
+                                    <div class="field-error">
+                                        <i class="fas fa-exclamation-circle"></i> {{.Errors.Email}}
+                                    </div>
+                                    {{end}}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">
+                                    <i class="fas fa-lock"></i> Mot de passe
+                                </label>
+                                <div class="input-wrapper">
+                                    <input type="password" id="password" name="password" placeholder="Créez un mot de passe" required>
+                                    {{if .Errors.Password}}
+                                    <div class="field-error">
+                                        <i class="fas fa-exclamation-circle"></i> {{.Errors.Password}}
+                                    </div>
+                                    {{end}}
+                                    <small><i class="fas fa-info-circle"></i> Le mot de passe doit contenir au moins 8 caractères</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirm-password">
+                                    <i class="fas fa-lock"></i> Confirmer le mot de passe
+                                </label>
+                                <div class="input-wrapper">
+                                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirmez votre mot de passe" required>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn-submit">
+                                    <i class="fas fa-user-plus"></i> S'inscrire
+                                </button>
+                            </div>
+
+                            <div class="form-footer">
+                                <p>Déjà un compte ? <a href="./log-in.html">Se connecter</a></p>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html> 
+{{end}}

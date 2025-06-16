@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/discussion.css">
+    <script src="https://kit.fontawesome.com/e29182f907.js" crossorigin="anonymous"></script>
+    <title>Erreur 500 - Erreur interne du serveur</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--background-color);
+            color: var(--text-color-white);
+            text-align: center;
+            font-family: var(--font-family);
+        }
+        .error-container {
+            background-color: var(--primary-color);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+        .error-code {
+            font-size: 8em;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        .error-message {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .error-description {
+            font-size: 1.1em;
+            color: var(--text-color);
+            margin-bottom: 30px;
+        }
+        .home-button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .home-button:hover {
+            background-color: var(--hover-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-code">500</div>
+        <div class="error-message">Erreur Interne du Serveur</div>
+        <div class="error-description">
+            Désolé, une erreur inattendue est survenue sur le serveur. Veuillez réessayer plus tard.
+        </div>
+        <a href="./index.html" class="home-button">Retour à l'accueil</a>
+    </div>
+</body>
+</html> 

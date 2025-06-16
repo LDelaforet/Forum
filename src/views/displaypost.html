@@ -1,0 +1,172 @@
+{{define "post"}}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/discussion.css">
+    <script src="https://kit.fontawesome.com/e29182f907.js" crossorigin="anonymous"></script>
+    <script src="/js/vote.js"></script>
+    <title>Forum Maquette</title>
+
+</head>
+<body>
+    <!-- NAVBAR EN HAUT -->
+    <nav class="navbar">
+        <div class="navbar-logo" onclick="window.location.href='/'">LOGO</div>
+        <input type="text" class="navbar-search" placeholder="Rechercher ..." />
+        <div class="navbar-btns">
+            {{if .User}}
+                <button class="navbar-btn" onclick="window.location.href='/profile'"><i class="fa-regular fa-user"></i></button>
+            {{else}}
+                <button class="navbar-btn" onclick="window.location.href='/login'"><i class="fa-regular fa-user"></i></button>
+            {{end}}
+        </div>
+    </nav>
+    <div class="layout">
+        <!-- Sidebar Left -->
+        <aside class="sidebar">
+            <div class="sidebar-separator"></div>
+            {{if .User}}
+                <button class="sidebar-bottom-btn" onclick="window.location.href='/create-post'"><i class="fa-solid fa-plus"></i> Créer</button>
+            {{end}}
+        </aside>
+        <div class="main-area">
+            <div class="content-area">
+                <div class="center-area">
+                    <div class="discussion-container">
+                        <!-- Post principal -->
+                        <div class="main-post">
+                            <h1 class="main-post-title">{{.Post.Title}}</h1>
+                            <div class="main-post-author">
+                                <div class="author-avatar">{{slice .Post.Username 0 2}}</div>
+                                <div class="author-info">
+                                    <span class="author-name">{{.Post.Username}}</span>
+                                    <span class="post-date">Publié le {{.Post.CreatedAt.Format "02 Janvier 2006"}}</span>
+                                </div>
+                            </div>
+                            <div class="main-post-content">
+                                {{.Post.Content}}
+                            </div>
+                            <div class="post-tags">
+                                {{range .Tags}}
+                                <a href="/search?query={{.Name}}&type=tag" class="tag">
+                                    <i class="fas fa-tag"></i>{{.Name}}
+                                </a>
+                                {{end}}
+                            </div>
+                            <div class="post-actions">
+                                <div class="vote-container">
+                                    <button class="post-action-btn vote-btn downvote" data-post-id="{{.Post.ID}}" data-value="-1" title="Downvote">
+                                        <i class="fa-solid fa-arrow-down"></i>
+                                    </button>
+                                    <span class="post-votes" id="votes-{{.Post.ID}}">{{.Post.VoteScore}}</span>
+                                    <button class="post-action-btn vote-btn upvote" data-post-id="{{.Post.ID}}" data-value="1" title="Upvote">
+                                        <i class="fa-solid fa-arrow-up"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            {{if .User}}
+                            <div class="message-actions">
+                                <button class="action-btn" onclick="showReplyForm(this)">
+                                    <i class="fas fa-reply"></i> Répondre
+                                </button>
+                            </div>
+                            {{end}}
+                        </div>
+
+                        <!-- Réponses -->
+                        <div class="replies">
+                            {{range .Comments}}
+                            <div class="message" data-comment-id="{{.ID}}">
+                                <div class="message-header">
+                                    <span class="message-author">{{.Username}}</span>
+                                    <span class="message-date">{{formatTimeAgo .CreatedAt}}</span>
+                                </div>
+                                <div class="message-content">
+                                    {{.Content}}
+                                </div>
+                                {{if $.User}}
+                                <div class="message-actions">
+                                    <button class="action-btn" onclick="showReplyForm(this)">
+                                        <i class="fas fa-reply"></i> Répondre
+                                    </button>
+                                </div>
+                                {{end}}
+                            </div>
+                            {{end}}
+                        </div>
+
+                        {{if .User}}
+                        <!-- Formulaire de nouveau message -->
+                        <form class="new-message-form" method="POST" action="/comment">
+                            <textarea name="content" class="message-input" placeholder="Écrivez votre message ici..."></textarea>
+                            <input type="hidden" name="post_id" value="{{.Post.ID}}">
+                            <button type="submit" class="submit-btn">Envoyer</button>
+                        </form>
+                        {{end}}
+                    </div>
+                </div>
+                <div class="right-area">
+                    <aside class="rightbar">
+                        <div class="rightbar-card"></div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showReplyForm(button) {
+            console.log('showReplyForm appelé');
+            const messageDiv = button.closest('.message, .main-post');
+            console.log('messageDiv:', messageDiv);
+            
+            const existingForm = messageDiv.querySelector('.reply-form');
+            if (existingForm) {
+                existingForm.remove();
+                return;
+            }
+
+            const form = document.createElement('form');
+            form.className = 'reply-form';
+            form.method = 'POST';
+            form.action = '/comment';
+            form.innerHTML = `
+                <div class="message-input-container">
+                    <textarea name="content" class="message-input" placeholder="Écrivez votre réponse ici..."></textarea>
+                    <input type="hidden" name="post_id" value="{{.Post.ID}}">
+                    <input type="hidden" name="parent_comment_id" value="${messageDiv.dataset.commentId || ''}">
+                </div>
+                <div class="message-actions">
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Envoyer
+                    </button>
+                </div>
+            `;
+            
+            messageDiv.appendChild(form);
+            console.log('Formulaire ajouté:', form);
+        }
+
+        function createRepliesContainer(messageDiv) {
+            const replies = document.createElement('div');
+            replies.className = 'replies';
+            messageDiv.appendChild(replies);
+            return replies;
+        }
+
+        function toggleReactions(button) {
+            const messageDiv = button.closest('.message, .main-post');
+            const reactions = messageDiv.querySelector('.reactions');
+            
+            // Ici, vous pouvez ajouter une logique pour afficher un menu de réactions
+            // et gérer l'ajout de réactions
+            alert('Fonctionnalité de réactions à implémenter');
+        }
+    </script>
+</body>
+</html>
+{{end}}

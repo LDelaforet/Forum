@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"fmt"
 )
 
 type Tag struct {
@@ -9,53 +10,122 @@ type Tag struct {
 	Name string
 }
 
-// CreateTag insère un nouveau tag dans la BDD, ignore si existe déjà
-func CreateTag(db *sql.DB, name string) (int, error) {
-	res, err := db.Exec("INSERT IGNORE INTO tag (name) VALUES (?)", name)
+// GetMaxID récupère le dernier ID utilisé dans la table tag
+func GetMaxTagID() (int, error) {
+	var maxID int
+	query := "SELECT MAX(id) FROM tag"
+	err := DbContext.QueryRow(query).Scan(&maxID)
 	if err != nil {
-		return 0, err
+		return 0, fmt.Errorf("erreur lors de la récupération du dernier ID : %v", err)
 	}
-	id, err := res.LastInsertId()
-	if err != nil {
-		return 0, err
-	}
-	return int(id), nil
+	return maxID, nil
 }
 
-// CreateTagIfNotExists insère un nouveau tag dans la BDD, ignore si existe déjà
-func CreateTagIfNotExists(db *sql.DB, tag string) error {
-	_, err := db.Exec("INSERT IGNORE INTO tag (name) VALUES (?)", tag)
-	return err
+// CreateTag crée un nouveau tag
+func (t *Tag) CreateTag() error {
+	maxID, err := GetMaxTagID()
+	if err != nil {
+		return err
+	}
+	t.ID = maxID + 1
+
+	query := "INSERT INTO tag (id, name) VALUES (?, ?)"
+	_, err = DbContext.Exec(query, t.ID, t.Name)
+	if err != nil {
+		return fmt.Errorf("erreur lors de la création du tag : %v", err)
+	}
+	return nil
+}
+
+// GetTagByID récupère un tag par son ID
+func GetTagByID(id int) (*Tag, error) {
+	tag := &Tag{}
+	query := "SELECT id, name FROM tag WHERE id = ?"
+	err := DbContext.QueryRow(query, id).Scan(&tag.ID, &tag.Name)
+	if err != nil {
+		return nil, fmt.Errorf("erreur lors de la récupération du tag : %v", err)
+	}
+	return tag, nil
 }
 
 // GetTagByName récupère un tag par son nom
-func GetTagByName(db *sql.DB, name string) (*Tag, error) {
+func GetTagByName(name string) (*Tag, error) {
 	tag := &Tag{}
-	err := db.QueryRow("SELECT id, name FROM tag WHERE name = ?", name).Scan(&tag.ID, &tag.Name)
+	query := "SELECT id, name FROM tag WHERE name = ?"
+	err := DbContext.QueryRow(query, name).Scan(&tag.ID, &tag.Name)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return nil, nil // tag non trouvé
+			// Le tag n'existe pas, on retourne nil sans erreur
+			return nil, nil
 		}
-		return nil, err
+		return nil, fmt.Errorf("erreur lors de la récupération du tag : %v", err)
 	}
 	return tag, nil
 }
 
 // GetAllTags récupère tous les tags
-func GetAllTags(db *sql.DB) ([]Tag, error) {
-	rows, err := db.Query("SELECT id, name FROM tag")
+func GetAllTags() ([]*Tag, error) {
+	query := "SELECT id, name FROM tag ORDER BY name"
+	rows, err := DbContext.Query(query)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("erreur lors de la récupération des tags : %v", err)
 	}
 	defer rows.Close()
 
-	var tags []Tag
+	var tags []*Tag
 	for rows.Next() {
-		var t Tag
-		if err := rows.Scan(&t.ID, &t.Name); err != nil {
-			return nil, err
+		tag := &Tag{}
+		err := rows.Scan(&tag.ID, &tag.Name)
+		if err != nil {
+			return nil, fmt.Errorf("erreur lors de la lecture des tags : %v", err)
 		}
-		tags = append(tags, t)
+		tags = append(tags, tag)
+	}
+	return tags, nil
+}
+
+// AddTagToPost associe un tag à un post
+func AddTagToPost(postID, tagID int) error {
+	query := "INSERT INTO post_tag (post_id, tag_id) VALUES (?, ?)"
+	_, err := DbContext.Exec(query, postID, tagID)
+	if err != nil {
+		return fmt.Errorf("erreur lors de l'association du tag au post : %v", err)
+	}
+	return nil
+}
+
+// RemoveTagFromPost retire un tag d'un post
+func RemoveTagFromPost(postID, tagID int) error {
+	query := "DELETE FROM post_tag WHERE post_id = ? AND tag_id = ?"
+	_, err := DbContext.Exec(query, postID, tagID)
+	if err != nil {
+		return fmt.Errorf("erreur lors du retrait du tag du post : %v", err)
+	}
+	return nil
+}
+
+// GetPostTags récupère tous les tags d'un post
+func GetPostTags(postID int) ([]*Tag, error) {
+	query := `
+		SELECT t.id, t.name 
+		FROM tag t 
+		JOIN post_tag pt ON t.id = pt.tag_id 
+		WHERE pt.post_id = ?
+		ORDER BY t.name`
+	rows, err := DbContext.Query(query, postID)
+	if err != nil {
+		return nil, fmt.Errorf("erreur lors de la récupération des tags du post : %v", err)
+	}
+	defer rows.Close()
+
+	var tags []*Tag
+	for rows.Next() {
+		tag := &Tag{}
+		err := rows.Scan(&tag.ID, &tag.Name)
+		if err != nil {
+			return nil, fmt.Errorf("erreur lors de la lecture des tags : %v", err)
+		}
+		tags = append(tags, tag)
 	}
 	return tags, nil
 }

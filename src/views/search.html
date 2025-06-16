@@ -1,0 +1,133 @@
+{{define "search"}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche - Forum</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/search.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="message" style="display: none;"></div>
+    <!-- NAVBAR EN HAUT -->
+    <nav class="navbar">
+        <a class="navbar-logo" href="/">LOGO</a>
+        <input type="text" class="navbar-search" placeholder="Rechercher ..." />
+        <div class="navbar-btns">
+            {{if .User}}
+            <p class="username">{{.User.Username}}</p>
+            {{end}}
+            <a class="navbar-btn" href="/login"><i id="login-icon" class="fa-regular fa-user"></i></a>
+        </div>
+    </nav>
+
+    <div class="layout">
+        <!-- Sidebar Left -->
+        <aside class="sidebar">
+            <div class="sidebar-separator"></div>
+            <a class="sidebar-bottom-btn" href="/create-post"><i class="fa-solid fa-plus"></i> Créer</a>
+        </aside>
+
+        <div class="main-area">
+            <div class="content-area">
+                <div class="center-area">
+                    <div class="search-container">
+                        <div class="search-header">
+                            <h1><i class="fas fa-search"></i> Recherche</h1>
+                        </div>
+                        
+                        <form class="search-form" action="/search" method="GET">
+                            <div class="search-type-selector">
+                                <button type="button" class="search-type-btn active" data-type="text">
+                                    <i class="fas fa-heading"></i> Par texte
+                                </button>
+                                <button type="button" class="search-type-btn" data-type="tag">
+                                    <i class="fas fa-tags"></i> Par tag
+                                </button>
+                            </div>
+                            
+                            <div class="search-input-group">
+                                <input type="text" 
+                                       class="search-input" 
+                                       name="query" 
+                                       placeholder="Entrez votre recherche..." 
+                                       value="{{.Query}}"
+                                       required>
+                                <input type="hidden" name="type" id="searchType" value="text">
+                                <button type="submit" class="search-type-btn active">
+                                    <i class="fas fa-search"></i> Rechercher
+                                </button>
+                            </div>
+                        </form>
+
+                        {{if .Posts}}
+                            <div class="search-results">
+                                {{range .Posts}}
+                                <div class="result-item">
+                                    <div class="result-title">
+                                        <a href="/post/{{.ID}}" style="color: var(--text-color-white); text-decoration: none;">
+                                            {{.Title}}
+                                        </a>
+                                    </div>
+                                    <div class="result-meta">
+                                        <span><i class="fas fa-user"></i> {{.Username}}</span>
+                                        <span><i class="fas fa-calendar"></i> {{formatTimeAgo .CreatedAt}}</span>
+                                        <span><i class="fas fa-thumbs-up"></i> {{.VoteScore}} votes</span>
+                                    </div>
+                                    <div class="result-content">
+                                        {{.Content}}
+                                    </div>
+                                </div>
+                                {{end}}
+                            </div>
+                        {{else if .Query}}
+                            <div class="no-results">
+                                <i class="fas fa-search" style="font-size: 2em; margin-bottom: 15px;"></i>
+                                <p>Aucun résultat trouvé pour "{{.Query}}"</p>
+                            </div>
+                        {{end}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const typeButtons = document.querySelectorAll('.search-type-btn[data-type]');
+            const searchTypeInput = document.getElementById('searchType');
+            const searchInput = document.querySelector('.search-input');
+            
+            // Définir le placeholder initial en fonction du type actif
+            const activeType = searchTypeInput.value;
+            updatePlaceholder(activeType);
+            
+            typeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Mettre à jour le type de recherche
+                    const newType = this.dataset.type;
+                    searchTypeInput.value = newType;
+                    
+                    // Mettre à jour l'apparence des boutons
+                    typeButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Mettre à jour le placeholder
+                    updatePlaceholder(newType);
+                });
+            });
+            
+            function updatePlaceholder(type) {
+                if (type === 'tag') {
+                    searchInput.placeholder = "Entrez un tag (ex: programmation, aide)...";
+                } else {
+                    searchInput.placeholder = "Entrez votre recherche...";
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+{{end}} 

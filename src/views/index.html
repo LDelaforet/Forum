@@ -1,0 +1,70 @@
+{{define "index"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="https://kit.fontawesome.com/e29182f907.js" crossorigin="anonymous"></script>
+    <script src="/js/vote.js"></script>
+    <title>Forum Maquette</title>
+</head>
+<!-- index.html -->
+
+<body>
+    <div id="message" style="display: none;"></div>
+    <!-- NAVBAR EN HAUT -->
+    <nav class="navbar">
+        <a class="navbar-logo" href="/">LOGO</a>
+        <input type="text" class="navbar-search" placeholder="Rechercher ..." />
+        <div class="navbar-btns">
+            {{if .User}}
+            <p class="username">{{.User.Username}}</p>
+            <a class="navbar-btn" href="/users/{{.User.ID}}"><i id="login-icon" class="fa-regular fa-user"></i></a>
+            {{else}}
+            <a class="navbar-btn" href="/login"><i id="login-icon" class="fa-regular fa-user"></i></a>
+            {{end}}
+        </div>
+    </nav>
+    <div class="layout">
+        <!-- Sidebar Left -->
+        <aside class="sidebar">
+            <div class="sidebar-separator"></div>
+            <a class="sidebar-bottom-btn" href="/create-post"><i class="fa-solid fa-plus"></i> Créer</a>
+        </aside>
+        <div class="main-area">
+            <div class="content-area">
+                <div class="center-area">
+                    <!-- Posts -->
+                    <section class="posts">
+                        {{range .Posts}}
+                        <div class="post-card">
+                            <div class="post-title">{{.Title}}</div>
+                            <div class="post-content">{{.Content}}</div>
+                            <a href="/post/{{.ID}}" class="post-badge">Details</a>
+                            <div class="post-actions">
+                                <a href="/users/{{.UserID}}" class="post-userprofile">{{.Username}}</a>
+                                <div class="vote-container">
+                                    <button class="post-action-btn vote-btn downvote" data-post-id="{{.ID}}" data-value="-1" title="Downvote">
+                                        <i class="fa-solid fa-arrow-down"></i>
+                                    </button>
+                                    <span class="post-votes" id="votes-{{.ID}}">{{.VoteScore}}</span>
+                                    <button class="post-action-btn vote-btn upvote" data-post-id="{{.ID}}" data-value="1" title="Upvote">
+                                        <i class="fa-solid fa-arrow-up"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        {{end}}
+                    </section>
+                </div>
+                <div class="right-area">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+{{end}}

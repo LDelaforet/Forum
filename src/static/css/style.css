@@ -1,0 +1,158 @@
+/* Styles pour les commentaires */
+.comments {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.comments h2 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.comment-form {
+    margin-bottom: 2rem;
+}
+
+.comment-form textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.comment-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.comment-form button:hover {
+    background-color: #0056b3;
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.comment {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-content {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.comment-actions {
+    margin-top: 0.5rem;
+}
+
+.reply-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.9rem;
+}
+
+.reply-button:hover {
+    text-decoration: underline;
+}
+
+.reply-form {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+.reply-form textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.reply-form button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.reply-form button:hover {
+    background-color: #218838;
+}
+
+/* Styles pour les commentaires imbriqués */
+.message {
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+}
+
+.message .message {
+    margin-left: 2rem;
+    border-left: 3px solid #e9ecef;
+    padding-left: 1rem;
+}
+
+.message .message .message {
+    margin-left: 2rem;
+    border-left: 3px solid #dee2e6;
+}
+
+.message .message .message .message {
+    margin-left: 2rem;
+    border-left: 3px solid #ced4da;
+}
+
+.logout-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+}
+
+.logout-btn i {
+    margin-right: 8px;
+} 
