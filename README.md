@@ -12,7 +12,7 @@ Projet FORUM développé en Go.
 
 1. Clonez le repository :
 ```bash
-git clone [URL_DU_REPO]
+git clone https://github.com/LDelaforet/Forum
 cd Forum
 ```
 
@@ -25,7 +25,7 @@ cd Forum
   4. Sélectionnez le fichier `bdd_forum.sql`
   5. Cliquez sur "Exécuter"
 
-3. Créez un fichier `.env` à la racine du projet avec les variables suivantes :
+3. Créez un fichier `forum.env` dans le dossier `src` avec les variables suivantes :
 ```env
 # Configuration de la base de données
 DB_HOST=localhost

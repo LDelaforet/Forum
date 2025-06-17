@@ -22,9 +22,9 @@ var AppConfig Config
 
 // LoadConfig charge les variables d'environnement depuis le fichier .env
 func LoadConfig() error {
-	err := godotenv.Load()
+	err := godotenv.Load("forum.env")
 	if err != nil {
-		return fmt.Errorf("erreur lors du chargement du fichier .env: %v", err)
+		return fmt.Errorf("erreur lors du chargement du fichier forum.env: %v", err)
 	}
 
 	AppConfig = Config{

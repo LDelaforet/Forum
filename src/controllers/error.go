@@ -77,10 +77,13 @@ func (ec *ErrorController) WithErrorHandler(temp *template.Template, next http.H
 
 		// Si le code d'état est une erreur, rediriger vers la page d'erreur
 		if rw.statusCode >= 400 {
-			params := make([]string, 0)
-			params = append(params, "code="+strconv.Itoa(rw.statusCode))
-			params = append(params, "message="+http.StatusText(rw.statusCode))
-			http.Redirect(w, r, "/error?"+strings.Join(params, "&"), http.StatusSeeOther)
+			// Ne pas rediriger si l'en-tête a déjà été envoyé
+			if !rw.wroteHeader {
+				params := make([]string, 0)
+				params = append(params, "code="+strconv.Itoa(rw.statusCode))
+				params = append(params, "message="+http.StatusText(rw.statusCode))
+				http.Redirect(w, r, "/error?"+strings.Join(params, "&"), http.StatusSeeOther)
+			}
 		}
 	}
 }
@@ -88,11 +91,23 @@ func (ec *ErrorController) WithErrorHandler(temp *template.Template, next http.H
 // responseWriter est un wrapper pour http.ResponseWriter qui capture le code d'état
 type responseWriter struct {
 	http.ResponseWriter
-	statusCode int
+	statusCode  int
+	wroteHeader bool
 }
 
 // WriteHeader capture le code d'état
 func (rw *responseWriter) WriteHeader(code int) {
-	rw.statusCode = code
-	rw.ResponseWriter.WriteHeader(code)
+	if !rw.wroteHeader {
+		rw.statusCode = code
+		rw.wroteHeader = true
+		rw.ResponseWriter.WriteHeader(code)
+	}
+}
+
+// Write capture l'écriture du corps de la réponse
+func (rw *responseWriter) Write(b []byte) (int, error) {
+	if !rw.wroteHeader {
+		rw.WriteHeader(http.StatusOK)
+	}
+	return rw.ResponseWriter.Write(b)
 }
